@@ -13,7 +13,7 @@ final class CoronaTrackerClientTests: XCTestCase {
 
     func testCreateProfile() {
         let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient(client: TestClient()).createProfile() { profileIdentifier in
+        CoronaTrackerClient().createProfile() { profileIdentifier in
             XCTAssertEqual(profileIdentifier, "Hello, World!")
             expectation.fulfill()
         }
@@ -25,15 +25,42 @@ final class CoronaTrackerClientTests: XCTestCase {
     ]
 }
 
+private extension CoronaTrackerClient {
+
+    init() {
+        self.init(client: TestClient(), tokenProvider: TestTokenProvider())
+    }
+}
+
+private final class TestTokenProvider: TokenProvider {
+
+    let token: Token
+
+    init() {
+        token = Token(value: "test-token")!
+    }
+}
+
 private final class TestClient: Client {
 
     func send(_ request: Request, response: @escaping (Response) -> Void) {
-        createProfile() { profileIdentifier in
-            response((nil, profileIdentifier, nil))
+        switch request {
+        case let ("POST", "/api/profiles", body):
+            createProfile(token: body, response: response)
+        default:
+            fatalError("request not supported: \(request)")
         }
     }
 
-    private func createProfile(response: (_ profileIdentifier: String?) -> Void) {
-        response("Hello, World!")
+    private func createProfile(token: String?, response: (Response) -> Void) {
+        guard let token = token else {
+            response((nil, nil, nil))
+            return
+        }
+        guard token.count <= 24 else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"profile_id":"Hello, World!"}"#.data(using: .utf8), error: nil))
     }
 }
