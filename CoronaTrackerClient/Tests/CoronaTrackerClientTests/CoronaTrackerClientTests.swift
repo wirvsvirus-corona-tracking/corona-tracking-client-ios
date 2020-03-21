@@ -14,7 +14,7 @@ final class CoronaTrackerClientTests: XCTestCase {
     func testCreateProfile() {
         let expectation = self.expectation(description: "\(#function)")
         CoronaTrackerClient().createProfile() { profileIdentifier in
-            XCTAssertEqual(profileIdentifier, "Hello, World!")
+            XCTAssertEqual(profileIdentifier, "1")
             expectation.fulfill()
         }
         waitForExpectations(timeout: 1)
@@ -95,15 +95,11 @@ private final class TestClient: Client {
     }
 
     private func createProfile(token: String?, response: (Response) -> Void) {
-        guard let token = token else {
+        guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
         }
-        guard token.count <= 24 else {
-            response((nil, nil, nil))
-            return
-        }
-        response((statusCode: nil, data: #"{"profile_id":"Hello, World!"}"#.data(using: .utf8), error: nil))
+        response((statusCode: nil, data: #"{"profile_id":"1"}"#.data(using: .utf8), error: nil))
     }
 
     private func updateProfileReturningGeneralErrorCode(token: String?, response: (Response) -> Void) {
