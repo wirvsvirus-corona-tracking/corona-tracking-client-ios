@@ -107,6 +107,33 @@ final class CoronaTrackerClientTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
+    func testGetProfileStateReturnsGeneralErrorCode() {
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().getProfile(identifier: "11") { state in
+            XCTAssertEqual(state, -1)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
+    func testGetProfileStateReturnsNotInfectedState() {
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().getProfile(identifier: "12") { state in
+            XCTAssertEqual(state, 0)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
+    func testGetProfileStateReturnsInfectedState() {
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().getProfile(identifier: "13") { state in
+            XCTAssertEqual(state, 1)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
     static var allTests = [
         ("testCreateProfile", testCreateProfile),
         ("testUpdateProfileContactIdentifierReturnsGeneralErrorCode", testUpdateProfileContactIdentifierReturnsGeneralErrorCode),
@@ -117,7 +144,10 @@ final class CoronaTrackerClientTests: XCTestCase {
         ("testUpdateProfileStateToInfectedReturnsFailureStatusCode", testUpdateProfileStateToInfectedReturnsFailureStatusCode),
         ("testUpdateProfileStateToInfectedReturnsSuccessStatusCode", testUpdateProfileStateToInfectedReturnsSuccessStatusCode),
         ("testDeleteProfileReturnsFailureStatusCode", testDeleteProfileReturnsFailureStatusCode),
-        ("testDeleteProfileReturnsSuccessStatusCode", testDeleteProfileReturnsSuccessStatusCode)
+        ("testDeleteProfileReturnsSuccessStatusCode", testDeleteProfileReturnsSuccessStatusCode),
+        ("testGetProfileStateReturnsGeneralErrorCode", testGetProfileStateReturnsGeneralErrorCode),
+        ("testGetProfileStateReturnsNotInfectedState", testGetProfileStateReturnsNotInfectedState),
+        ("testGetProfileStateReturnsInfectedState", testGetProfileStateReturnsInfectedState)
     ]
 }
 
@@ -161,6 +191,12 @@ private final class TestClient: Client {
             deleteProfileReturningFailureStatusCode(token: body, response: response)
         case let ("DELETE", "/api/profiles/10", body):
             deleteProfileReturningSuccessStatusCode(token: body, response: response)
+        case let ("GET", "/api/profiles/11", body):
+            getProfileReturningGeneralErrorCode(token: body, response: response)
+        case let ("GET", "/api/profiles/12", body):
+            getProfileReturningNotInfectedState(token: body, response: response)
+        case let ("GET", "/api/profiles/13", body):
+            getProfileReturningInfectedState(token: body, response: response)
         default:
             fatalError("request not supported: \(request)")
         }
@@ -228,6 +264,30 @@ private final class TestClient: Client {
             return
         }
         response((statusCode: nil, data: #"{"status_code":0}"#.data(using: .utf8), error: nil))
+    }
+
+    private func getProfileReturningGeneralErrorCode(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"state":-1}"#.data(using: .utf8), error: nil))
+    }
+
+    private func getProfileReturningNotInfectedState(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"state":0}"#.data(using: .utf8), error: nil))
+    }
+
+    private func getProfileReturningInfectedState(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"state":1}"#.data(using: .utf8), error: nil))
     }
 
     private func isTokenValid(token: String?) -> Bool {

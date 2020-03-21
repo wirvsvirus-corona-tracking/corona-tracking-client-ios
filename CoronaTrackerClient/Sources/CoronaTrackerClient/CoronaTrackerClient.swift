@@ -32,6 +32,23 @@ public struct CoronaTrackerClient {
         }
     }
 
+    public func getProfile(identifier: String, completion: @escaping (_ state: Int?) -> Void) {
+        client.send(("GET", "/api/profiles/\(identifier)", tokenProvider.token.value)) { response in
+            let state: Int?
+            if let data = response.data {
+                do {
+                    let profile = try JSONDecoder().decode(ProfileState.self, from: data)
+                    state = profile.state
+                } catch {
+                    state = nil
+                }
+            } else {
+                state = nil
+            }
+            completion(state)
+        }
+    }
+
     public func updateProfile(contactIdentifier: String, completion: @escaping (_ state: Int?) -> Void) {
         client.send(("PUT", "/api/profiles/\(contactIdentifier)", tokenProvider.token.value)) { response in
             let state: Int?
