@@ -89,6 +89,24 @@ final class CoronaTrackerClientTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
+    func testDeleteProfileReturnsFailureStatusCode() {
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().deleteProfile(identifier: "9") { statusCode in
+            XCTAssertEqual(statusCode, -1)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
+    func testDeleteProfileReturnsSuccessStatusCode() {
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().deleteProfile(identifier: "10") { statusCode in
+            XCTAssertEqual(statusCode, 0)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
     static var allTests = [
         ("testCreateProfile", testCreateProfile),
         ("testUpdateProfileReturnsGeneralErrorCode", testUpdateProfileContactIdentifierReturnsGeneralErrorCode),
@@ -137,6 +155,10 @@ private final class TestClient: Client {
             updateProfileStateReturningFailureStatusCode(token: body, response: response)
         case let ("PUT", "/api/profiles/8", body):
             updateProfileStateReturningSuccessStatusCode(token: body, response: response)
+        case let ("DELETE", "/api/profiles/9", body):
+            deleteProfileReturningFailureStatusCode(token: body, response: response)
+        case let ("DELETE", "/api/profiles/10", body):
+            deleteProfileReturningSuccessStatusCode(token: body, response: response)
         default:
             fatalError("request not supported: \(request)")
         }
@@ -183,6 +205,22 @@ private final class TestClient: Client {
     }
 
     private func updateProfileStateReturningSuccessStatusCode(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"status_code":0}"#.data(using: .utf8), error: nil))
+    }
+
+    private func deleteProfileReturningFailureStatusCode(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"status_code":-1}"#.data(using: .utf8), error: nil))
+    }
+
+    private func deleteProfileReturningSuccessStatusCode(token: String?, response: (Response) -> Void) {
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return

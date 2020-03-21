@@ -20,7 +20,7 @@ public struct CoronaTrackerClient {
             let profileIdentifier: String?
             if let data = response.data {
                 do {
-                    let profile = try JSONDecoder().decode(Profile.self, from: data)
+                    let profile = try JSONDecoder().decode(ProfileIdentifier.self, from: data)
                     profileIdentifier = profile.identifier
                 } catch {
                     profileIdentifier = nil
@@ -37,7 +37,7 @@ public struct CoronaTrackerClient {
             let state: Int?
             if let data = response.data {
                 do {
-                    let profile = try JSONDecoder().decode(ContactProfile.self, from: data)
+                    let profile = try JSONDecoder().decode(ProfileState.self, from: data)
                     state = profile.state
                 } catch {
                     state = nil
@@ -54,7 +54,24 @@ public struct CoronaTrackerClient {
             let statusCode: Int?
             if let data = response.data {
                 do {
-                    let profile = try JSONDecoder().decode(ProfileUpdate.self, from: data)
+                    let profile = try JSONDecoder().decode(StatusCode.self, from: data)
+                    statusCode = profile.statusCode
+                } catch {
+                    statusCode = nil
+                }
+            } else {
+                statusCode = nil
+            }
+            completion(statusCode)
+        }
+    }
+
+    public func deleteProfile(identifier: String, completion: @escaping (_ statusCode: Int?) -> Void) {
+        client.send(("DELETE", "/api/profiles/\(identifier)", tokenProvider.token.value)) { response in
+            let statusCode: Int?
+            if let data = response.data {
+                do {
+                    let profile = try JSONDecoder().decode(StatusCode.self, from: data)
                     statusCode = profile.statusCode
                 } catch {
                     statusCode = nil
@@ -70,7 +87,7 @@ public struct CoronaTrackerClient {
     private let tokenProvider: TokenProvider
 }
 
-private struct Profile: Decodable {
+private struct ProfileIdentifier: Decodable {
 
     private enum CodingKeys: String, CodingKey {
         case identifier = "profile_id"
@@ -79,12 +96,12 @@ private struct Profile: Decodable {
     let identifier: String
 }
 
-private struct ContactProfile: Decodable {
+private struct ProfileState: Decodable {
 
     let state: Int
 }
 
-private struct ProfileUpdate: Decodable {
+private struct StatusCode: Decodable {
 
     private enum CodingKeys: String, CodingKey {
         case statusCode = "status_code"
