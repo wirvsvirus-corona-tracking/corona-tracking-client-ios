@@ -13,7 +13,8 @@ public func allTests() -> [XCTestCaseEntry] {
     return [
         testCase(CoronaTrackerClientTests.allTests),
         testCase(CreateProfileTests.allTests),
-        testCase(UpdateProfileContactIdentifierTests.allTests)
+        testCase(UpdateProfileContactIdentifierTests.allTests),
+        testCase(UpdateProfileStateTests.allTests)
     ]
 }
 #endif

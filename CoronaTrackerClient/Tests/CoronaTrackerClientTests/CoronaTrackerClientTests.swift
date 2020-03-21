@@ -11,42 +11,6 @@ import CoronaTrackerClient
 
 final class CoronaTrackerClientTests: XCTestCase {
 
-    func testUpdateProfileStateToNotInfectedReturnsFailureStatusCode() {
-        let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(state: 0, identifier: "5") { statusCode in
-            XCTAssertEqual(statusCode, -1)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 1)
-    }
-
-    func testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode() {
-        let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(state: 0, identifier: "6") { statusCode in
-            XCTAssertEqual(statusCode, 0)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 1)
-    }
-
-    func testUpdateProfileStateToInfectedReturnsFailureStatusCode() {
-        let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(state: 1, identifier: "7") { statusCode in
-            XCTAssertEqual(statusCode, -1)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 1)
-    }
-
-    func testUpdateProfileStateToInfectedReturnsSuccessStatusCode() {
-        let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(state: 1, identifier: "8") { statusCode in
-            XCTAssertEqual(statusCode, 0)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 1)
-    }
-
     func testDeleteProfileReturnsFailureStatusCode() {
         let expectation = self.expectation(description: "\(#function)")
         CoronaTrackerClient().deleteProfile(identifier: "9") { statusCode in
@@ -93,10 +57,6 @@ final class CoronaTrackerClientTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testUpdateProfileStateToNotInfectedReturnsFailureStatusCode", testUpdateProfileStateToNotInfectedReturnsFailureStatusCode),
-        ("testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode", testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode),
-        ("testUpdateProfileStateToInfectedReturnsFailureStatusCode", testUpdateProfileStateToInfectedReturnsFailureStatusCode),
-        ("testUpdateProfileStateToInfectedReturnsSuccessStatusCode", testUpdateProfileStateToInfectedReturnsSuccessStatusCode),
         ("testDeleteProfileReturnsFailureStatusCode", testDeleteProfileReturnsFailureStatusCode),
         ("testDeleteProfileReturnsSuccessStatusCode", testDeleteProfileReturnsSuccessStatusCode),
         ("testGetProfileStateReturnsGeneralErrorCode", testGetProfileStateReturnsGeneralErrorCode),

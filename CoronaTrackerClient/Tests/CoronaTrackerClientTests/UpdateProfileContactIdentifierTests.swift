@@ -47,6 +47,6 @@ final class UpdateProfileContactIdentifierTests: XCTestCase {
     static var allTests = [
         ("test_update_returns_general_error_code", test_update_returns_general_error_code),
         ("test_update_returns_not_infected_state", test_update_returns_not_infected_state),
-        ("test_update_returns_infected_state", test_update_returns_infected_state),
+        ("test_update_returns_infected_state", test_update_returns_infected_state)
     ]
 }
