@@ -14,7 +14,8 @@ public func allTests() -> [XCTestCaseEntry] {
         testCase(CoronaTrackerClientTests.allTests),
         testCase(CreateProfileTests.allTests),
         testCase(UpdateProfileContactIdentifierTests.allTests),
-        testCase(UpdateProfileStateTests.allTests)
+        testCase(UpdateProfileStateTests.allTests),
+        testCase(DeleteProfileTests.allTests)
     ]
 }
 #endif
