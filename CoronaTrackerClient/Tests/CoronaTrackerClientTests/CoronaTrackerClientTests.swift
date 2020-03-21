@@ -31,9 +31,21 @@ final class CoronaTrackerClientTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
+    func testUpdateProfileReturnsNotInfectedState() {
+        let otherClientsProfileIdentifier = "3"
+
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().updateProfile(contactIdentifier: otherClientsProfileIdentifier) { state in
+            XCTAssertEqual(state, 0)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
     static var allTests = [
         ("testCreateProfile", testCreateProfile),
-        ("testUpdateProfileReturnsGeneralErrorCode", testUpdateProfileReturnsGeneralErrorCode)
+        ("testUpdateProfileReturnsGeneralErrorCode", testUpdateProfileReturnsGeneralErrorCode),
+        ("testUpdateProfileReturnsNotInfectedState", testUpdateProfileReturnsNotInfectedState)
     ]
 }
 
@@ -60,7 +72,9 @@ private final class TestClient: Client {
         case let ("POST", "/api/profiles", body):
             createProfile(token: body, response: response)
         case let ("PUT", "/api/profiles/2", body):
-            updateProfile(token: body, response: response)
+            updateProfileReturningGeneralErrorCode(token: body, response: response)
+        case let ("PUT", "/api/profiles/3", body):
+            updateProfileReturningNotInfectedState(token: body, response: response)
         default:
             fatalError("request not supported: \(request)")
         }
@@ -78,12 +92,20 @@ private final class TestClient: Client {
         response((statusCode: nil, data: #"{"profile_id":"Hello, World!"}"#.data(using: .utf8), error: nil))
     }
 
-    private func updateProfile(token: String?, response: (Response) -> Void) {
+    private func updateProfileReturningGeneralErrorCode(token: String?, response: (Response) -> Void) {
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
         }
         response((statusCode: nil, data: #"{"state":-1}"#.data(using: .utf8), error: nil))
+    }
+
+    private func updateProfileReturningNotInfectedState(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"state":0}"#.data(using: .utf8), error: nil))
     }
 
     private func isTokenValid(token: String?) -> Bool {
