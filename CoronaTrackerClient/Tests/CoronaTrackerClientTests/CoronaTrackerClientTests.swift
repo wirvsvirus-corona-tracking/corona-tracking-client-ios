@@ -109,13 +109,15 @@ final class CoronaTrackerClientTests: XCTestCase {
 
     static var allTests = [
         ("testCreateProfile", testCreateProfile),
-        ("testUpdateProfileReturnsGeneralErrorCode", testUpdateProfileContactIdentifierReturnsGeneralErrorCode),
-        ("testUpdateProfileReturnsNotInfectedState", testUpdateProfileContactIdentifierReturnsNotInfectedState),
-        ("testUpdateProfileReturnsInfectedState", testUpdateProfileContactIdentifierReturnsInfectedState),
+        ("testUpdateProfileContactIdentifierReturnsGeneralErrorCode", testUpdateProfileContactIdentifierReturnsGeneralErrorCode),
+        ("testUpdateProfileContactIdentifierReturnsNotInfectedState", testUpdateProfileContactIdentifierReturnsNotInfectedState),
+        ("testUpdateProfileContactIdentifierReturnsInfectedState", testUpdateProfileContactIdentifierReturnsInfectedState),
         ("testUpdateProfileStateToNotInfectedReturnsFailureStatusCode", testUpdateProfileStateToNotInfectedReturnsFailureStatusCode),
         ("testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode", testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode),
         ("testUpdateProfileStateToInfectedReturnsFailureStatusCode", testUpdateProfileStateToInfectedReturnsFailureStatusCode),
-        ("testUpdateProfileStateToInfectedReturnsSuccessStatusCode", testUpdateProfileStateToInfectedReturnsSuccessStatusCode)
+        ("testUpdateProfileStateToInfectedReturnsSuccessStatusCode", testUpdateProfileStateToInfectedReturnsSuccessStatusCode),
+        ("testDeleteProfileReturnsFailureStatusCode", testDeleteProfileReturnsFailureStatusCode),
+        ("testDeleteProfileReturnsSuccessStatusCode", testDeleteProfileReturnsSuccessStatusCode)
     ]
 }
 
