@@ -50,6 +50,7 @@
 		C0DAD1E12425F72300F52F83 /* CoronaTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronaTrackerUITests.swift; sourceTree = "<group>"; };
 		C0DAD1E32425F72300F52F83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0DAD1EF2425FC6000F52F83 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C0DAD1F024261DEF00F52F83 /* CoronaTrackerClient */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoronaTrackerClient; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +85,7 @@
 				C0DAD1BE2425F71F00F52F83 /* CoronaTracker */,
 				C0DAD1D52425F72300F52F83 /* CoronaTrackerTests */,
 				C0DAD1E02425F72300F52F83 /* CoronaTrackerUITests */,
+				C0DAD1F024261DEF00F52F83 /* CoronaTrackerClient */,
 				C0DAD1BD2425F71F00F52F83 /* Products */,
 			);
 			sourceTree = "<group>";
