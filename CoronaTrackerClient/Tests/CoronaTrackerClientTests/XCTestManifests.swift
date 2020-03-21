@@ -12,7 +12,8 @@ import XCTest
 public func allTests() -> [XCTestCaseEntry] {
     return [
         testCase(CoronaTrackerClientTests.allTests),
-        testCase(CreateProfileTests.allTests)
+        testCase(CreateProfileTests.allTests),
+        testCase(UpdateProfileContactIdentifierTests.allTests)
     ]
 }
 #endif

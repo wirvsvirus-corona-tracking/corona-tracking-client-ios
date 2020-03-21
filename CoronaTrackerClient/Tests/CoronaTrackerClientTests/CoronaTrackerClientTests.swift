@@ -11,39 +11,6 @@ import CoronaTrackerClient
 
 final class CoronaTrackerClientTests: XCTestCase {
 
-    func testUpdateProfileContactIdentifierReturnsGeneralErrorCode() {
-        let otherClientsProfileIdentifier = "2"
-
-        let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(contactIdentifier: otherClientsProfileIdentifier) { state in
-            XCTAssertEqual(state, -1)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 1)
-    }
-
-    func testUpdateProfileContactIdentifierReturnsNotInfectedState() {
-        let otherClientsProfileIdentifier = "3"
-
-        let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(contactIdentifier: otherClientsProfileIdentifier) { state in
-            XCTAssertEqual(state, 0)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 1)
-    }
-
-    func testUpdateProfileContactIdentifierReturnsInfectedState() {
-        let otherClientsProfileIdentifier = "4"
-
-        let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(contactIdentifier: otherClientsProfileIdentifier) { state in
-            XCTAssertEqual(state, 1)
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 1)
-    }
-
     func testUpdateProfileStateToNotInfectedReturnsFailureStatusCode() {
         let expectation = self.expectation(description: "\(#function)")
         CoronaTrackerClient().updateProfile(state: 0, identifier: "5") { statusCode in
@@ -126,9 +93,6 @@ final class CoronaTrackerClientTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testUpdateProfileContactIdentifierReturnsGeneralErrorCode", testUpdateProfileContactIdentifierReturnsGeneralErrorCode),
-        ("testUpdateProfileContactIdentifierReturnsNotInfectedState", testUpdateProfileContactIdentifierReturnsNotInfectedState),
-        ("testUpdateProfileContactIdentifierReturnsInfectedState", testUpdateProfileContactIdentifierReturnsInfectedState),
         ("testUpdateProfileStateToNotInfectedReturnsFailureStatusCode", testUpdateProfileStateToNotInfectedReturnsFailureStatusCode),
         ("testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode", testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode),
         ("testUpdateProfileStateToInfectedReturnsFailureStatusCode", testUpdateProfileStateToInfectedReturnsFailureStatusCode),
