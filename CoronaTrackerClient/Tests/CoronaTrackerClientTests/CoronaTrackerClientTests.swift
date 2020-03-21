@@ -42,10 +42,22 @@ final class CoronaTrackerClientTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
+    func testUpdateProfileReturnsInfectedState() {
+        let otherClientsProfileIdentifier = "4"
+
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().updateProfile(contactIdentifier: otherClientsProfileIdentifier) { state in
+            XCTAssertEqual(state, 1)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
     static var allTests = [
         ("testCreateProfile", testCreateProfile),
         ("testUpdateProfileReturnsGeneralErrorCode", testUpdateProfileReturnsGeneralErrorCode),
-        ("testUpdateProfileReturnsNotInfectedState", testUpdateProfileReturnsNotInfectedState)
+        ("testUpdateProfileReturnsNotInfectedState", testUpdateProfileReturnsNotInfectedState),
+        ("testUpdateProfileReturnsInfectedState", testUpdateProfileReturnsInfectedState)
     ]
 }
 
@@ -75,6 +87,8 @@ private final class TestClient: Client {
             updateProfileReturningGeneralErrorCode(token: body, response: response)
         case let ("PUT", "/api/profiles/3", body):
             updateProfileReturningNotInfectedState(token: body, response: response)
+        case let ("PUT", "/api/profiles/4", body):
+            updateProfileReturningInfectedState(token: body, response: response)
         default:
             fatalError("request not supported: \(request)")
         }
@@ -106,6 +120,14 @@ private final class TestClient: Client {
             return
         }
         response((statusCode: nil, data: #"{"state":0}"#.data(using: .utf8), error: nil))
+    }
+
+    private func updateProfileReturningInfectedState(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"state":1}"#.data(using: .utf8), error: nil))
     }
 
     private func isTokenValid(token: String?) -> Bool {
