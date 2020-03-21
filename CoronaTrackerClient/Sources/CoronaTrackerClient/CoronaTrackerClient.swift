@@ -49,6 +49,23 @@ public struct CoronaTrackerClient {
         }
     }
 
+    public func updateProfile(state: Int, identifier: String, completion: @escaping (_ statusCode: Int?) -> Void) {
+        client.send(("PUT", "/api/profiles/\(identifier)", tokenProvider.token.value)) { response in
+            let statusCode: Int?
+            if let data = response.data {
+                do {
+                    let profile = try JSONDecoder().decode(ProfileUpdate.self, from: data)
+                    statusCode = profile.statusCode
+                } catch {
+                    statusCode = nil
+                }
+            } else {
+                statusCode = nil
+            }
+            completion(statusCode)
+        }
+    }
+
     private let client: Client
     private let tokenProvider: TokenProvider
 }
@@ -65,4 +82,13 @@ private struct Profile: Decodable {
 private struct ContactProfile: Decodable {
 
     let state: Int
+}
+
+private struct ProfileUpdate: Decodable {
+
+    private enum CodingKeys: String, CodingKey {
+        case statusCode = "status_code"
+    }
+
+    let statusCode: Int
 }

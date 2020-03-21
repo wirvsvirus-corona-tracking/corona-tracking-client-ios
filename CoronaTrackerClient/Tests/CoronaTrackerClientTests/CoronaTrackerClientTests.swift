@@ -20,7 +20,7 @@ final class CoronaTrackerClientTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testUpdateProfileReturnsGeneralErrorCode() {
+    func testUpdateProfileContactIdentifierReturnsGeneralErrorCode() {
         let otherClientsProfileIdentifier = "2"
 
         let expectation = self.expectation(description: "\(#function)")
@@ -31,7 +31,7 @@ final class CoronaTrackerClientTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testUpdateProfileReturnsNotInfectedState() {
+    func testUpdateProfileContactIdentifierReturnsNotInfectedState() {
         let otherClientsProfileIdentifier = "3"
 
         let expectation = self.expectation(description: "\(#function)")
@@ -42,7 +42,7 @@ final class CoronaTrackerClientTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func testUpdateProfileReturnsInfectedState() {
+    func testUpdateProfileContactIdentifierReturnsInfectedState() {
         let otherClientsProfileIdentifier = "4"
 
         let expectation = self.expectation(description: "\(#function)")
@@ -53,11 +53,51 @@ final class CoronaTrackerClientTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
+    func testUpdateProfileStateToNotInfectedReturnsFailureStatusCode() {
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().updateProfile(state: 0, identifier: "5") { statusCode in
+            XCTAssertEqual(statusCode, -1)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
+    func testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode() {
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().updateProfile(state: 0, identifier: "6") { statusCode in
+            XCTAssertEqual(statusCode, 0)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
+    func testUpdateProfileStateToInfectedReturnsFailureStatusCode() {
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().updateProfile(state: 1, identifier: "7") { statusCode in
+            XCTAssertEqual(statusCode, -1)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
+    func testUpdateProfileStateToInfectedReturnsSuccessStatusCode() {
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().updateProfile(state: 1, identifier: "8") { statusCode in
+            XCTAssertEqual(statusCode, 0)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
     static var allTests = [
         ("testCreateProfile", testCreateProfile),
-        ("testUpdateProfileReturnsGeneralErrorCode", testUpdateProfileReturnsGeneralErrorCode),
-        ("testUpdateProfileReturnsNotInfectedState", testUpdateProfileReturnsNotInfectedState),
-        ("testUpdateProfileReturnsInfectedState", testUpdateProfileReturnsInfectedState)
+        ("testUpdateProfileReturnsGeneralErrorCode", testUpdateProfileContactIdentifierReturnsGeneralErrorCode),
+        ("testUpdateProfileReturnsNotInfectedState", testUpdateProfileContactIdentifierReturnsNotInfectedState),
+        ("testUpdateProfileReturnsInfectedState", testUpdateProfileContactIdentifierReturnsInfectedState),
+        ("testUpdateProfileStateToNotInfectedReturnsFailureStatusCode", testUpdateProfileStateToNotInfectedReturnsFailureStatusCode),
+        ("testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode", testUpdateProfileStateToNotInfectedReturnsSuccessStatusCode),
+        ("testUpdateProfileStateToInfectedReturnsFailureStatusCode", testUpdateProfileStateToInfectedReturnsFailureStatusCode),
+        ("testUpdateProfileStateToInfectedReturnsSuccessStatusCode", testUpdateProfileStateToInfectedReturnsSuccessStatusCode)
     ]
 }
 
@@ -89,6 +129,14 @@ private final class TestClient: Client {
             updateProfileReturningNotInfectedState(token: body, response: response)
         case let ("PUT", "/api/profiles/4", body):
             updateProfileReturningInfectedState(token: body, response: response)
+        case let ("PUT", "/api/profiles/5", body):
+            updateProfileStateReturningFailureStatusCode(token: body, response: response)
+        case let ("PUT", "/api/profiles/6", body):
+            updateProfileStateReturningSuccessStatusCode(token: body, response: response)
+        case let ("PUT", "/api/profiles/7", body):
+            updateProfileStateReturningFailureStatusCode(token: body, response: response)
+        case let ("PUT", "/api/profiles/8", body):
+            updateProfileStateReturningSuccessStatusCode(token: body, response: response)
         default:
             fatalError("request not supported: \(request)")
         }
@@ -124,6 +172,22 @@ private final class TestClient: Client {
             return
         }
         response((statusCode: nil, data: #"{"state":1}"#.data(using: .utf8), error: nil))
+    }
+
+    private func updateProfileStateReturningFailureStatusCode(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"status_code":-1}"#.data(using: .utf8), error: nil))
+    }
+
+    private func updateProfileStateReturningSuccessStatusCode(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"status_code":0}"#.data(using: .utf8), error: nil))
     }
 
     private func isTokenValid(token: String?) -> Bool {
