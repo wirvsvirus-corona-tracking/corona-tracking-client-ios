@@ -1,5 +1,5 @@
 //
-//  CoronaTrackerClientTests.swift
+//  GetProfileTests.swift
 //  CoronaTrackerClientTests
 //
 //  Created by Stephan Lemnitzer on 21.03.20.
@@ -9,7 +9,7 @@
 import XCTest
 import CoronaTrackerClient
 
-final class CoronaTrackerClientTests: XCTestCase {
+final class GetProfileTests: XCTestCase {
 
     func testGetProfileStateReturnsGeneralErrorCode() {
         let expectation = self.expectation(description: "\(#function)")

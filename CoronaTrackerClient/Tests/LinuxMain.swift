@@ -11,9 +11,9 @@ import XCTest
 import CoronaTrackerClientTests
 
 var tests = [XCTestCaseEntry]()
-tests += CoronaTrackerClientTests.allTests()
 tests += CreateProfileTests.allTests()
 tests += UpdateProfileContactIdentifierTests.allTests()
 tests += UpdateProfileStateTests.allTests()
 tests += DeleteProfileTests.allTests()
+tests += GetProfileTests.allTests()
 XCTMain(tests)
