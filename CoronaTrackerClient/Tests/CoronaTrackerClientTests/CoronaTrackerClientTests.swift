@@ -20,8 +20,20 @@ final class CoronaTrackerClientTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
+    func testUpdateProfileReturnsGeneralErrorCode() {
+        let otherClientsProfileIdentifier = "2"
+
+        let expectation = self.expectation(description: "\(#function)")
+        CoronaTrackerClient().updateProfile(contactIdentifier: otherClientsProfileIdentifier) { state in
+            XCTAssertEqual(state, -1)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
     static var allTests = [
-        ("testCreateProfile", testCreateProfile)
+        ("testCreateProfile", testCreateProfile),
+        ("testUpdateProfileReturnsGeneralErrorCode", testUpdateProfileReturnsGeneralErrorCode)
     ]
 }
 
@@ -47,6 +59,8 @@ private final class TestClient: Client {
         switch request {
         case let ("POST", "/api/profiles", body):
             createProfile(token: body, response: response)
+        case let ("PUT", "/api/profiles/2", body):
+            updateProfile(token: body, response: response)
         default:
             fatalError("request not supported: \(request)")
         }
@@ -62,5 +76,19 @@ private final class TestClient: Client {
             return
         }
         response((statusCode: nil, data: #"{"profile_id":"Hello, World!"}"#.data(using: .utf8), error: nil))
+    }
+
+    private func updateProfile(token: String?, response: (Response) -> Void) {
+        guard isTokenValid(token: token) else {
+            response((nil, nil, nil))
+            return
+        }
+        response((statusCode: nil, data: #"{"state":-1}"#.data(using: .utf8), error: nil))
+    }
+
+    private func isTokenValid(token: String?) -> Bool {
+        guard let token = token else { return false }
+        guard token.count <= 24 else { return false }
+        return true
     }
 }
