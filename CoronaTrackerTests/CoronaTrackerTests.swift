@@ -14,7 +14,7 @@ final class CoronaTrackerTests: XCTestCase {
 
     func test_start_tracker_the_first_time() {
         let expectation = self.expectation(description: "\(#function)")
-        CoronaTracker(provider: TestProfileIdentifierProvider(profileIdentifier: nil)).start { profileIdentifier, profileState in
+        CoronaTracker(profileIdentifier: nil).start { profileIdentifier, profileState in
             XCTAssertEqual(profileIdentifier, "12")
             XCTAssertEqual(profileState, 0)
             expectation.fulfill()
@@ -24,7 +24,7 @@ final class CoronaTrackerTests: XCTestCase {
 
     func test_start_tracker() {
         let expectation = self.expectation(description: "\(#function)")
-        CoronaTracker(provider: TestProfileIdentifierProvider(profileIdentifier: "12")).start { profileIdentifier, profileState in
+        CoronaTracker(profileIdentifier: "12").start { profileIdentifier, profileState in
             XCTAssertEqual(profileIdentifier, "12")
             XCTAssertEqual(profileState, 0)
             expectation.fulfill()

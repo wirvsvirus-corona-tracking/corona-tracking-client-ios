@@ -13,7 +13,7 @@ final class DeleteProfileTests: XCTestCase {
 
     func test_delete_succeeds() {
         let expectation = self.expectation(description: "\(#function)")
-        let tracker = CoronaTracker(provider: TestProfileIdentifierProvider(profileIdentifier: "10"))
+        let tracker = CoronaTracker(profileIdentifier: "10")
         tracker.deleteProfile() { error in
             XCTAssertNil(error)
             expectation.fulfill()
@@ -23,7 +23,7 @@ final class DeleteProfileTests: XCTestCase {
 
     func test_delete_fails_with_client_error() {
         let expectation = self.expectation(description: "\(#function)")
-        let tracker = CoronaTracker(provider: TestProfileIdentifierProvider(profileIdentifier: "9"))
+        let tracker = CoronaTracker(profileIdentifier: "9")
         tracker.deleteProfile() { error in
             XCTAssertEqual(error as? CoronaTracker.DeleteProfileError, .clientError)
             expectation.fulfill()
@@ -33,7 +33,7 @@ final class DeleteProfileTests: XCTestCase {
 
     func test_delete_fails_with_profile_identifier_missing() {
         let expectation = self.expectation(description: "\(#function)")
-        let tracker = CoronaTracker(provider: TestProfileIdentifierProvider(profileIdentifier: nil))
+        let tracker = CoronaTracker(profileIdentifier: nil)
         tracker.deleteProfile() { error in
             XCTAssertEqual(error as? CoronaTracker.DeleteProfileError, .missingProfileIdentifier)
             expectation.fulfill()

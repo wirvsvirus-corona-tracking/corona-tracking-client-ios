@@ -14,7 +14,7 @@ final class ChangeProfileStateTests: XCTestCase {
     
     func test_change_to_infected() {
         let expectation = self.expectation(description: "\(#function)")
-        let tracker = CoronaTracker(provider: TestProfileIdentifierProvider(profileIdentifier: "6"))
+        let tracker = CoronaTracker(profileIdentifier: "6")
         tracker.changeProfileState(to: .infected) { newProfileState, error in
             XCTAssertEqual(newProfileState, .infected)
             XCTAssertNil(error)
@@ -25,7 +25,7 @@ final class ChangeProfileStateTests: XCTestCase {
 
     func test_change_to_not_infected() {
         let expectation = self.expectation(description: "\(#function)")
-        let tracker = CoronaTracker(provider: TestProfileIdentifierProvider(profileIdentifier: "6"))
+        let tracker = CoronaTracker(profileIdentifier: "6")
         tracker.changeProfileState(to: .notInfected) { newProfileState, error in
             XCTAssertEqual(newProfileState, .notInfected)
             XCTAssertNil(error)
@@ -36,7 +36,7 @@ final class ChangeProfileStateTests: XCTestCase {
 
     func test_change_fails_with_client_error() {
         let expectation = self.expectation(description: "\(#function)")
-        let tracker = CoronaTracker(provider: TestProfileIdentifierProvider(profileIdentifier: "5"))
+        let tracker = CoronaTracker(profileIdentifier: "5")
         tracker.changeProfileState(to: .any) { newProfileState, error in
             XCTAssertNil(newProfileState)
             XCTAssertEqual(error as? CoronaTracker.ChangeProfileStateError, .clientError)
@@ -47,7 +47,7 @@ final class ChangeProfileStateTests: XCTestCase {
 
     func test_change_fails_with_missing_profile_identifier() {
         let expectation = self.expectation(description: "\(#function)")
-        let tracker = CoronaTracker(provider: TestProfileIdentifierProvider(profileIdentifier: nil))
+        let tracker = CoronaTracker(profileIdentifier: nil)
         tracker.changeProfileState(to: .any) { newProfileState, error in
             XCTAssertNil(newProfileState)
             XCTAssertEqual(error as? CoronaTracker.ChangeProfileStateError, .missingProfileIdentifier)

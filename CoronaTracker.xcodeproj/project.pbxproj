@@ -10,8 +10,7 @@
 		C01F87332426871300415A2E /* CoronaTrackerClientTest in Frameworks */ = {isa = PBXBuildFile; productRef = C01F87322426871300415A2E /* CoronaTrackerClientTest */; };
 		C01F87362426976A00415A2E /* CoronaTrackerClientTest in Frameworks */ = {isa = PBXBuildFile; productRef = C01F87352426976A00415A2E /* CoronaTrackerClientTest */; };
 		C0458E9A2427564300E6D023 /* ChangeProfileStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0458E992427564300E6D023 /* ChangeProfileStateTests.swift */; };
-		C0458E9C2427569600E6D023 /* Tracker+TestInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0458E9B2427569600E6D023 /* Tracker+TestInit.swift */; };
-		C0458E9E242756AF00E6D023 /* TestProfileIdentifierProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0458E9D242756AF00E6D023 /* TestProfileIdentifierProvider.swift */; };
+		C0458E9C2427569600E6D023 /* CoronaTracker+TestInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0458E9B2427569600E6D023 /* CoronaTracker+TestInit.swift */; };
 		C0458EA024275E3700E6D023 /* DeleteProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0458E9F24275E3700E6D023 /* DeleteProfileTests.swift */; };
 		C0578F00242640B4001B4344 /* CoronaTrackerClient in Frameworks */ = {isa = PBXBuildFile; productRef = C0578EFF242640B4001B4344 /* CoronaTrackerClient */; };
 		C0578F022426410E001B4344 /* URLClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0578F012426410E001B4344 /* URLClient.swift */; };
@@ -47,8 +46,7 @@
 
 /* Begin PBXFileReference section */
 		C0458E992427564300E6D023 /* ChangeProfileStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProfileStateTests.swift; sourceTree = "<group>"; };
-		C0458E9B2427569600E6D023 /* Tracker+TestInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tracker+TestInit.swift"; sourceTree = "<group>"; };
-		C0458E9D242756AF00E6D023 /* TestProfileIdentifierProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProfileIdentifierProvider.swift; sourceTree = "<group>"; };
+		C0458E9B2427569600E6D023 /* CoronaTracker+TestInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoronaTracker+TestInit.swift"; sourceTree = "<group>"; };
 		C0458E9F24275E3700E6D023 /* DeleteProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProfileTests.swift; sourceTree = "<group>"; };
 		C0578EFC24263E46001B4344 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		C0578F012426410E001B4344 /* URLClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLClient.swift; sourceTree = "<group>"; };
@@ -155,8 +153,7 @@
 				C0458E992427564300E6D023 /* ChangeProfileStateTests.swift */,
 				C0458E9F24275E3700E6D023 /* DeleteProfileTests.swift */,
 				C08262A12427359E00E51618 /* URLClientTests.swift */,
-				C0458E9D242756AF00E6D023 /* TestProfileIdentifierProvider.swift */,
-				C0458E9B2427569600E6D023 /* Tracker+TestInit.swift */,
+				C0458E9B2427569600E6D023 /* CoronaTracker+TestInit.swift */,
 			);
 			path = CoronaTrackerTests;
 			sourceTree = "<group>";
@@ -322,8 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0458EA024275E3700E6D023 /* DeleteProfileTests.swift in Sources */,
-				C0458E9C2427569600E6D023 /* Tracker+TestInit.swift in Sources */,
-				C0458E9E242756AF00E6D023 /* TestProfileIdentifierProvider.swift in Sources */,
+				C0458E9C2427569600E6D023 /* CoronaTracker+TestInit.swift in Sources */,
 				C08262A22427359E00E51618 /* URLClientTests.swift in Sources */,
 				C0DAD1D72425F72300F52F83 /* CoronaTrackerTests.swift in Sources */,
 				C0458E9A2427564300E6D023 /* ChangeProfileStateTests.swift in Sources */,
