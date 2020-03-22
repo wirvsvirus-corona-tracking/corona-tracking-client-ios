@@ -7,44 +7,49 @@
 //
 
 import XCTest
-@testable import CoronaTracker
+
 import CoronaTrackerClient
+import CoronaTrackerClientTest
+@testable import CoronaTracker
 
 final class CoronaTrackerTests: XCTestCase {
 
-    func testURLClientCreateProfile() {
-        let url = Bundle(for: Self.classForCoder()).url(forResource: "Config", withExtension: "plist")!
-        let data = try! Data(contentsOf: url)
-        let config = try! PropertyListDecoder().decode(Config.self, from: data)
-
+    func test_start_tracker_the_first_time() {
         let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient(client: URLClient(config: config)).createProfile() { profileIdentifier in
-            XCTAssertEqual(profileIdentifier, "Hello, World!")
+        Tracker(provider: TestNoProfileIdentifier()).start { profileIdentifier, profileState in
+            XCTAssertEqual(profileIdentifier, "12")
+            XCTAssertEqual(profileState, 0)
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+
+    func test_start_tracker() {
+        let expectation = self.expectation(description: "\(#function)")
+        Tracker(provider: TestProfileIdentifier(profileIdentifier: "12")).start { profileIdentifier, profileState in
+            XCTAssertEqual(profileIdentifier, "12")
+            XCTAssertEqual(profileState, 0)
             expectation.fulfill()
         }
         waitForExpectations(timeout: 1)
     }
 }
 
-private extension CoronaTrackerClient {
+private extension Tracker {
 
-    init(client: Client) {
-        self.init(client: client, tokenProvider: TestTokenProvider())
+    convenience init(provider: ProfileIdentifierProvider) {
+        self.init(profileIdentifierProvider: provider, client: TestClient(), tokenProvider: TestTokenProvider())
     }
 }
 
-private extension URLClient {
-
-    convenience init(config: Config) {
-        self.init(serverAddress: config.serverAddress)
-    }
+private final class TestNoProfileIdentifier: ProfileIdentifierProvider {
+    let profileIdentifier: String? = nil
 }
 
-private struct Config: Decodable {
+private final class TestProfileIdentifier: ProfileIdentifierProvider {
+    let profileIdentifier: String?
 
-    private enum CodingKeys: String, CodingKey {
-        case serverAddress = "Server Address"
+    init(profileIdentifier: String) {
+        self.profileIdentifier = profileIdentifier
     }
-
-    var serverAddress: String
 }

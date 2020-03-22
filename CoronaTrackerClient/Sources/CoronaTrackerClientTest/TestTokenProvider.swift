@@ -1,6 +1,6 @@
 //
-//  TokenProvider.swift
-//  CoronaTracker
+//  TestClient.swift
+//  CoronaTrackerClientTest
 //
 //  Created by Stephan Lemnitzer on 21.03.20.
 //  Copyright © 2020 WirVsVirus - Corona Tracking. All rights reserved.
@@ -8,11 +8,11 @@
 
 import CoronaTrackerClient
 
-final class TestTokenProvider: TokenProvider {
+public final class TestTokenProvider: TokenProvider {
 
-    let token: Token
+    public let token: Token
 
-    init() {
+    public init() {
         token = Token(value: "test-token")!
     }
 }

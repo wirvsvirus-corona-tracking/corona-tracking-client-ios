@@ -7,6 +7,7 @@
 //
 
 import CoronaTrackerClient
+import CoronaTrackerClientTest
 
 extension CoronaTrackerClient {
 

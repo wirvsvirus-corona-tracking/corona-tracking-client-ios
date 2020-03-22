@@ -14,10 +14,38 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C0DAD1BB2425F71F00F52F83"
-               BuildableName = "CoronaTracker.app"
-               BlueprintName = "CoronaTracker"
-               ReferencedContainer = "container:CoronaTracker.xcodeproj">
+               BlueprintIdentifier = "CoronaTrackerClient"
+               BuildableName = "CoronaTrackerClient"
+               BlueprintName = "CoronaTrackerClient"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CoronaTrackerClientTest"
+               BuildableName = "CoronaTrackerClientTest"
+               BlueprintName = "CoronaTrackerClientTest"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CoronaTrackerClientTests"
+               BuildableName = "CoronaTrackerClientTests"
+               BlueprintName = "CoronaTrackerClientTests"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -30,35 +58,13 @@
       codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CoronaTrackerClientTests"
                BuildableName = "CoronaTrackerClientTests"
                BlueprintName = "CoronaTrackerClientTests"
-               ReferencedContainer = "container:CoronaTrackerClient">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C0DAD1D12425F72300F52F83"
-               BuildableName = "CoronaTrackerTests.xctest"
-               BlueprintName = "CoronaTrackerTests"
-               ReferencedContainer = "container:CoronaTracker.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C0DAD1DC2425F72300F52F83"
-               BuildableName = "CoronaTrackerUITests.xctest"
-               BlueprintName = "CoronaTrackerUITests"
-               ReferencedContainer = "container:CoronaTracker.xcodeproj">
+               ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -73,16 +79,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C0DAD1BB2425F71F00F52F83"
-            BuildableName = "CoronaTracker.app"
-            BlueprintName = "CoronaTracker"
-            ReferencedContainer = "container:CoronaTracker.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -90,16 +86,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C0DAD1BB2425F71F00F52F83"
-            BuildableName = "CoronaTracker.app"
-            BlueprintName = "CoronaTracker"
-            ReferencedContainer = "container:CoronaTracker.xcodeproj">
+            BlueprintIdentifier = "CoronaTrackerClient"
+            BuildableName = "CoronaTrackerClient"
+            BlueprintName = "CoronaTrackerClient"
+            ReferencedContainer = "container:">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

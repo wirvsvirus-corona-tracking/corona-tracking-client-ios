@@ -1,6 +1,6 @@
 //
 //  TestClient.swift
-//  CoronaTrackerClientTests
+//  CoronaTrackerClientTest
 //
 //  Created by Stephan Lemnitzer on 21.03.20.
 //  Copyright © 2020 WirVsVirus - Corona Tracking. All rights reserved.
@@ -8,9 +8,11 @@
 
 import CoronaTrackerClient
 
-final class TestClient: Client {
+public final class TestClient: Client {
 
-    func send(_ request: Request, response: @escaping (Response) -> Void) {
+    public init() {}
+
+    public func send(_ request: Request, response: @escaping (Response) -> Void) {
         switch request {
         case let ("POST", "/api/profiles", body):
             createProfile(token: body, response: response)
@@ -48,7 +50,7 @@ final class TestClient: Client {
             response((nil, nil, nil))
             return
         }
-        response((statusCode: nil, data: #"{"profile_id":"1"}"#.data(using: .utf8), error: nil))
+        response((statusCode: nil, data: #"{"profile_id":"12"}"#.data(using: .utf8), error: nil))
     }
 
     private func updateProfileReturningGeneralErrorCode(token: String?, response: (Response) -> Void) {

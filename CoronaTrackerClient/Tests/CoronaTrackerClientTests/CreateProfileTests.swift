@@ -14,7 +14,7 @@ final class CreateProfileTests: XCTestCase {
     func test_create_returns_profile_identifier() {
         let expectation = self.expectation(description: "\(#function)")
         CoronaTrackerClient().createProfile() { profileIdentifier in
-            XCTAssertEqual(profileIdentifier, "1")
+            XCTAssertEqual(profileIdentifier, "12")
             expectation.fulfill()
         }
         waitForExpectations(timeout: 1)
