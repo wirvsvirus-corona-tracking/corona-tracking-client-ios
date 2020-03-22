@@ -20,7 +20,7 @@ final class CoronaTracker {
         self.client = CoronaTrackerClient(client: client, tokenProvider: tokenProvider)
     }
 
-    func start(completion: @escaping (_ profileIdentifier: String, _ profileState: Int) -> Void) {
+    func start(completion: @escaping (_ profileIdentifier: String?, _ profileState: Int?) -> Void) {
         if let profileIdentifier = profileIdentifierProvider.profileIdentifier {
             startClientToPoll(profileIdentifier: profileIdentifier, completion: completion)
         } else {
@@ -28,7 +28,7 @@ final class CoronaTracker {
                 if let profileIdentifier = profileIdentifier {
                     self.startClientToPoll(profileIdentifier: profileIdentifier.value, completion: completion)
                 } else {
-                    fatalError("could not create profile: \(error!)")
+                    completion(nil, nil)
                 }
             }
         }
@@ -134,13 +134,9 @@ final class CoronaTracker {
         }
     }
 
-    private func startClientToPoll(profileIdentifier: String, completion: @escaping (_ profileIdentifier: String, _ profileState: Int) -> Void) {
+    private func startClientToPoll(profileIdentifier: String, completion: @escaping (_ profileIdentifier: String, _ profileState: Int?) -> Void) {
         client.getProfile(identifier: profileIdentifier) { profileState in
-            if let profileState = profileState {
-                completion(profileIdentifier, profileState)
-            } else {
-                fatalError("could not get profile")
-            }
+            completion(profileIdentifier, profileState)
         }
     }
 

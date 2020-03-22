@@ -20,6 +20,7 @@ final class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tracker.start { _, profileState in
+            guard let profileState = profileState else { return }
             DispatchQueue.main.async { [weak self] in
                 self?.updateViews(forProfileState: profileState)
             }
