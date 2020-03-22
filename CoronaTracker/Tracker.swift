@@ -71,6 +71,24 @@ final class Tracker {
         }
     }
 
+    enum DeleteProfileError: Error {
+        case missingProfileIdentifier
+        case clientError
+    }
+
+    func deleteProfile(completion: @escaping (Error?) -> Void) {
+        if let profileIdentifier = profileIdentifierProvider.profileIdentifier {
+            client.deleteProfile(identifier: profileIdentifier) { statusCode in
+                switch statusCode {
+                case 0: completion(nil)
+                default: completion(DeleteProfileError.clientError)
+                }
+            }
+        } else {
+            completion(DeleteProfileError.missingProfileIdentifier)
+        }
+    }
+
     private func startClientToPoll(profileIdentifier: String, completion: @escaping (_ profileIdentifier: String, _ profileState: Int) -> Void) {
         client.getProfile(identifier: profileIdentifier) { profileState in
             if let profileState = profileState {
