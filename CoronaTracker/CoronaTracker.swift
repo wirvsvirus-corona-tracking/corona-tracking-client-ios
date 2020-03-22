@@ -59,10 +59,11 @@ final class CoronaTracker {
         case infected
         case notInfected
 
-        fileprivate init(clientProfileState: Int) {
+        fileprivate init?(clientProfileState: Int?) {
             switch clientProfileState {
             case 1: self = .infected
-            default: self = .notInfected
+            case 0: self = .notInfected
+            default: return nil
             }
         }
 
@@ -89,6 +90,29 @@ final class CoronaTracker {
             }
         } else {
             completion(nil, ChangeProfileStateError.missingProfileIdentifier)
+        }
+    }
+
+    struct ContactIdentifier {
+        let value: String
+    }
+
+    enum RegisterContactIdentifierError: Error {
+        case missingProfileIdentifier
+        case clientError
+    }
+
+    func registerContactIdentifier(_ identifier: ContactIdentifier, completion: @escaping (ProfileState?, Error?) -> Void) {
+        if let profileIdentifier = profileIdentifierProvider.profileIdentifier {
+            client.updateProfile(contactIdentifier: identifier.value, profileIdentifier: profileIdentifier) { state in
+                if let profileState = ProfileState(clientProfileState: state) {
+                    completion(profileState, nil)
+                } else {
+                    completion(nil, RegisterContactIdentifierError.clientError)
+                }
+            }
+        } else {
+            completion(nil, RegisterContactIdentifierError.missingProfileIdentifier)
         }
     }
 

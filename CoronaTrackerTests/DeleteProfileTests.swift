@@ -31,7 +31,7 @@ final class DeleteProfileTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 
-    func test_delete_fails_with_profile_identifier_missing() {
+    func test_delete_fails_with_missing_profile_identifier() {
         let expectation = self.expectation(description: "\(#function)")
         let tracker = CoronaTracker(profileIdentifier: nil)
         tracker.deleteProfile() { error in
