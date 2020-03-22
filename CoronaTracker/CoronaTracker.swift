@@ -24,12 +24,33 @@ final class CoronaTracker {
         if let profileIdentifier = profileIdentifierProvider.profileIdentifier {
             startClientToPoll(profileIdentifier: profileIdentifier, completion: completion)
         } else {
-            client.createProfile { profileIdentifier in
+            createProfile { profileIdentifier, error in
                 if let profileIdentifier = profileIdentifier {
-                    self.startClientToPoll(profileIdentifier: profileIdentifier, completion: completion)
+                    self.startClientToPoll(profileIdentifier: profileIdentifier.value, completion: completion)
                 } else {
-                    fatalError("could not create profile")
+                    fatalError("could not create profile: \(error!)")
                 }
+            }
+        }
+    }
+
+    struct ProfileIdentifier {
+        let value: String
+        fileprivate init(value: String) {
+            self.value = value
+        }
+    }
+
+    enum CreateProfileError: Error {
+        case clientError
+    }
+
+    func createProfile(completion: @escaping (ProfileIdentifier?, Error?) -> Void) {
+        client.createProfile { profileIdentifier in
+            if let profileIdentifier = profileIdentifier {
+                completion(.init(value: profileIdentifier), nil)
+            } else {
+                completion(nil, CreateProfileError.clientError)
             }
         }
     }
