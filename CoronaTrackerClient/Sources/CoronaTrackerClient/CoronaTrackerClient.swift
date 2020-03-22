@@ -8,6 +8,10 @@
 
 import Foundation
 
+private extension Token {
+    var data: Data { value.data(using: .utf8)! }
+}
+
 public struct CoronaTrackerClient {
 
     public init(client: Client, tokenProvider: TokenProvider) {
@@ -16,7 +20,7 @@ public struct CoronaTrackerClient {
     }
 
     public func createProfile(_ completion: @escaping (_ profileIdentifier: String?) -> Void) {
-        client.send(("POST", "/api/profiles", tokenProvider.token.value)) { response in
+        client.send(("POST", "/api/profiles", tokenProvider.token.data)) { response in
             let profileIdentifier: String?
             if let data = response.data {
                 do {
@@ -33,7 +37,7 @@ public struct CoronaTrackerClient {
     }
 
     public func getProfile(identifier: String, completion: @escaping (_ state: Int?) -> Void) {
-        client.send(("GET", "/api/profiles/\(identifier)", tokenProvider.token.value)) { response in
+        client.send(("GET", "/api/profiles/\(identifier)", tokenProvider.token.data)) { response in
             let state: Int?
             if let data = response.data {
                 do {
@@ -49,8 +53,9 @@ public struct CoronaTrackerClient {
         }
     }
 
-    public func updateProfile(contactIdentifier: String, completion: @escaping (_ state: Int?) -> Void) {
-        client.send(("PUT", "/api/profiles/\(contactIdentifier)", tokenProvider.token.value)) { response in
+    public func updateProfile(contactIdentifier: String, profileIdentifier: String, completion: @escaping (_ state: Int?) -> Void) {
+        let body = try! JSONEncoder().encode(ContactIdentifier(token: tokenProvider.token.value, contactIdentifier: contactIdentifier))
+        client.send(("PUT", "/api/profiles/\(profileIdentifier)", body)) { response in
             let state: Int?
             if let data = response.data {
                 do {
@@ -67,7 +72,7 @@ public struct CoronaTrackerClient {
     }
 
     public func updateProfile(state: Int, identifier: String, completion: @escaping (_ statusCode: Int?) -> Void) {
-        client.send(("PUT", "/api/profiles/\(identifier)", tokenProvider.token.value)) { response in
+        client.send(("PUT", "/api/profiles/\(identifier)", tokenProvider.token.data)) { response in
             let statusCode: Int?
             if let data = response.data {
                 do {
@@ -84,7 +89,7 @@ public struct CoronaTrackerClient {
     }
 
     public func deleteProfile(identifier: String, completion: @escaping (_ statusCode: Int?) -> Void) {
-        client.send(("DELETE", "/api/profiles/\(identifier)", tokenProvider.token.value)) { response in
+        client.send(("DELETE", "/api/profiles/\(identifier)", tokenProvider.token.data)) { response in
             let statusCode: Int?
             if let data = response.data {
                 do {
@@ -102,6 +107,17 @@ public struct CoronaTrackerClient {
 
     private let client: Client
     private let tokenProvider: TokenProvider
+}
+
+private struct ContactIdentifier: Encodable {
+
+    private enum CodingKeys: String, CodingKey {
+        case token
+        case contactIdentifier = "contact_id"
+    }
+
+    let token: String
+    let contactIdentifier: String
 }
 
 private struct ProfileIdentifier: Decodable {

@@ -6,6 +6,7 @@
 //  Copyright © 2020 WirVsVirus - Corona Tracking. All rights reserved.
 //
 
+import Foundation
 import CoronaTrackerClient
 
 public final class TestClient: Client {
@@ -15,37 +16,42 @@ public final class TestClient: Client {
     public func send(_ request: Request, response: @escaping (Response) -> Void) {
         switch request {
         case let ("POST", "/api/profiles", body):
-            createProfile(token: body, response: response)
+            createProfile(body: body, response: response)
         case let ("PUT", "/api/profiles/2", body):
-            updateProfileContactIdentifierReturningGeneralErrorCode(token: body, response: response)
+            updateProfileContactIdentifierReturningGeneralErrorCode(body: body, response: response)
         case let ("PUT", "/api/profiles/3", body):
-            updateProfileContactIdentifierReturningNotInfectedState(token: body, response: response)
+            updateProfileContactIdentifierReturningNotInfectedState(body: body, response: response)
         case let ("PUT", "/api/profiles/4", body):
-            updateProfileContactIdentifierReturningInfectedState(token: body, response: response)
+            updateProfileContactIdentifierReturningInfectedState(body: body, response: response)
         case let ("PUT", "/api/profiles/5", body):
-            updateProfileStateReturningFailureStatusCode(token: body, response: response)
+            updateProfileStateReturningFailureStatusCode(body: body, response: response)
         case let ("PUT", "/api/profiles/6", body):
-            updateProfileStateReturningSuccessStatusCode(token: body, response: response)
+            updateProfileStateReturningSuccessStatusCode(body: body, response: response)
         case let ("PUT", "/api/profiles/7", body):
-            updateProfileStateReturningFailureStatusCode(token: body, response: response)
+            updateProfileStateReturningFailureStatusCode(body: body, response: response)
         case let ("PUT", "/api/profiles/8", body):
-            updateProfileStateReturningSuccessStatusCode(token: body, response: response)
+            updateProfileStateReturningSuccessStatusCode(body: body, response: response)
         case let ("DELETE", "/api/profiles/9", body):
-            deleteProfileReturningFailureStatusCode(token: body, response: response)
+            deleteProfileReturningFailureStatusCode(body: body, response: response)
         case let ("DELETE", "/api/profiles/10", body):
-            deleteProfileReturningSuccessStatusCode(token: body, response: response)
+            deleteProfileReturningSuccessStatusCode(body: body, response: response)
         case let ("GET", "/api/profiles/11", body):
-            getProfileReturningGeneralErrorCode(token: body, response: response)
+            getProfileReturningGeneralErrorCode(body: body, response: response)
         case let ("GET", "/api/profiles/12", body):
-            getProfileReturningNotInfectedState(token: body, response: response)
+            getProfileReturningNotInfectedState(body: body, response: response)
         case let ("GET", "/api/profiles/13", body):
-            getProfileReturningInfectedState(token: body, response: response)
+            getProfileReturningInfectedState(body: body, response: response)
         default:
             fatalError("request not supported: \(request)")
         }
     }
 
-    private func createProfile(token: String?, response: (Response) -> Void) {
+    private func createProfile(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let token = String(data: body, encoding: .utf8)
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
@@ -53,31 +59,72 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"profile_id":"12"}"#.data(using: .utf8), error: nil))
     }
 
-    private func updateProfileContactIdentifierReturningGeneralErrorCode(token: String?, response: (Response) -> Void) {
-        guard isTokenValid(token: token) else {
+    private struct ContactIdentifier: Decodable {
+        private enum CodingKeys: String, CodingKey {
+            case token
+            case contactIdentifier = "contact_id"
+        }
+        let token: String
+        let contactIdentifier: String
+    }
+
+    private func updateProfileContactIdentifierReturningGeneralErrorCode(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let contactIdentifier = try? JSONDecoder().decode(ContactIdentifier.self, from: body)
+        guard contactIdentifier != nil else {
+            response((nil, nil, nil))
+            return
+        }
+        guard isTokenValid(token: contactIdentifier?.token) else {
             response((nil, nil, nil))
             return
         }
         response((statusCode: nil, data: #"{"state":-1}"#.data(using: .utf8), error: nil))
     }
 
-    private func updateProfileContactIdentifierReturningNotInfectedState(token: String?, response: (Response) -> Void) {
-        guard isTokenValid(token: token) else {
+    private func updateProfileContactIdentifierReturningNotInfectedState(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let contactIdentifier = try? JSONDecoder().decode(ContactIdentifier.self, from: body)
+        guard contactIdentifier != nil else {
+            response((nil, nil, nil))
+            return
+        }
+        guard isTokenValid(token: contactIdentifier?.token) else {
             response((nil, nil, nil))
             return
         }
         response((statusCode: nil, data: #"{"state":0}"#.data(using: .utf8), error: nil))
     }
 
-    private func updateProfileContactIdentifierReturningInfectedState(token: String?, response: (Response) -> Void) {
-        guard isTokenValid(token: token) else {
+    private func updateProfileContactIdentifierReturningInfectedState(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let contactIdentifier = try? JSONDecoder().decode(ContactIdentifier.self, from: body)
+        guard contactIdentifier != nil else {
+            response((nil, nil, nil))
+            return
+        }
+        guard isTokenValid(token: contactIdentifier?.token) else {
             response((nil, nil, nil))
             return
         }
         response((statusCode: nil, data: #"{"state":1}"#.data(using: .utf8), error: nil))
     }
 
-    private func updateProfileStateReturningFailureStatusCode(token: String?, response: (Response) -> Void) {
+    private func updateProfileStateReturningFailureStatusCode(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let token = String(data: body, encoding: .utf8)
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
@@ -85,7 +132,12 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"status_code":-1}"#.data(using: .utf8), error: nil))
     }
 
-    private func updateProfileStateReturningSuccessStatusCode(token: String?, response: (Response) -> Void) {
+    private func updateProfileStateReturningSuccessStatusCode(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let token = String(data: body, encoding: .utf8)
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
@@ -93,7 +145,12 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"status_code":0}"#.data(using: .utf8), error: nil))
     }
 
-    private func deleteProfileReturningFailureStatusCode(token: String?, response: (Response) -> Void) {
+    private func deleteProfileReturningFailureStatusCode(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let token = String(data: body, encoding: .utf8)
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
@@ -101,7 +158,12 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"status_code":-1}"#.data(using: .utf8), error: nil))
     }
 
-    private func deleteProfileReturningSuccessStatusCode(token: String?, response: (Response) -> Void) {
+    private func deleteProfileReturningSuccessStatusCode(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let token = String(data: body, encoding: .utf8)
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
@@ -109,7 +171,12 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"status_code":0}"#.data(using: .utf8), error: nil))
     }
 
-    private func getProfileReturningGeneralErrorCode(token: String?, response: (Response) -> Void) {
+    private func getProfileReturningGeneralErrorCode(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let token = String(data: body, encoding: .utf8)
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
@@ -117,7 +184,12 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"state":-1}"#.data(using: .utf8), error: nil))
     }
 
-    private func getProfileReturningNotInfectedState(token: String?, response: (Response) -> Void) {
+    private func getProfileReturningNotInfectedState(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let token = String(data: body, encoding: .utf8)
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
@@ -125,7 +197,12 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"state":0}"#.data(using: .utf8), error: nil))
     }
 
-    private func getProfileReturningInfectedState(token: String?, response: (Response) -> Void) {
+    private func getProfileReturningInfectedState(body: Data?, response: (Response) -> Void) {
+        guard let body = body else {
+            response((nil, nil, nil))
+            return
+        }
+        let token = String(data: body, encoding: .utf8)
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return

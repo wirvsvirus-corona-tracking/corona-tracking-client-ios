@@ -6,4 +6,6 @@
 //  Copyright © 2020 WirVsVirus - Corona Tracking. All rights reserved.
 //
 
-public typealias Request = (method: String, uri: String, body: String?)
+import Foundation
+
+public typealias Request = (method: String, uri: String, body: Data?)

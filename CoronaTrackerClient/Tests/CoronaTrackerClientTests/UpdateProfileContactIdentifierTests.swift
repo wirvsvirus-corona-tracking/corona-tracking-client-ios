@@ -12,10 +12,8 @@ import CoronaTrackerClient
 final class UpdateProfileContactIdentifierTests: XCTestCase {
 
     func test_update_returns_general_error_code() {
-        let otherClientsProfileIdentifier = "2"
-
         let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(contactIdentifier: otherClientsProfileIdentifier) { state in
+        CoronaTrackerClient().updateProfile(contactIdentifier: "100", profileIdentifier: "2") { state in
             XCTAssertEqual(state, -1)
             expectation.fulfill()
         }
@@ -23,10 +21,8 @@ final class UpdateProfileContactIdentifierTests: XCTestCase {
     }
 
     func test_update_returns_not_infected_state() {
-        let otherClientsProfileIdentifier = "3"
-
         let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(contactIdentifier: otherClientsProfileIdentifier) { state in
+        CoronaTrackerClient().updateProfile(contactIdentifier: "101", profileIdentifier: "3") { state in
             XCTAssertEqual(state, 0)
             expectation.fulfill()
         }
@@ -34,10 +30,8 @@ final class UpdateProfileContactIdentifierTests: XCTestCase {
     }
 
     func test_update_returns_infected_state() {
-        let otherClientsProfileIdentifier = "4"
-
         let expectation = self.expectation(description: "\(#function)")
-        CoronaTrackerClient().updateProfile(contactIdentifier: otherClientsProfileIdentifier) { state in
+        CoronaTrackerClient().updateProfile(contactIdentifier: "102", profileIdentifier: "4") { state in
             XCTAssertEqual(state, 1)
             expectation.fulfill()
         }

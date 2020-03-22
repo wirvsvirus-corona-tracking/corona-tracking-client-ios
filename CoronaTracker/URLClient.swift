@@ -20,10 +20,10 @@ final class URLClient: Client {
         send(self.request(request.method, request.uri, request.body), completion: response)
     }
 
-    private func request(_ method: String, _ uri: String, _ body: String? = nil) -> URLRequest {
+    private func request(_ method: String, _ uri: String, _ body: Data?) -> URLRequest {
         var request = URLRequest(url: URL(string: serverAddress + uri)!)
         request.httpMethod = method
-        request.httpBody = body?.data(using: .utf8)
+        request.httpBody = body
         return request
     }
 
