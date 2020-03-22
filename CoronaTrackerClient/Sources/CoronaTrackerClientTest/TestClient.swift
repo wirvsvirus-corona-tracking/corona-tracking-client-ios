@@ -17,11 +17,11 @@ public final class TestClient: Client {
         case let ("POST", "/api/profiles", body):
             createProfile(token: body, response: response)
         case let ("PUT", "/api/profiles/2", body):
-            updateProfileReturningGeneralErrorCode(token: body, response: response)
+            updateProfileContactIdentifierReturningGeneralErrorCode(token: body, response: response)
         case let ("PUT", "/api/profiles/3", body):
-            updateProfileReturningNotInfectedState(token: body, response: response)
+            updateProfileContactIdentifierReturningNotInfectedState(token: body, response: response)
         case let ("PUT", "/api/profiles/4", body):
-            updateProfileReturningInfectedState(token: body, response: response)
+            updateProfileContactIdentifierReturningInfectedState(token: body, response: response)
         case let ("PUT", "/api/profiles/5", body):
             updateProfileStateReturningFailureStatusCode(token: body, response: response)
         case let ("PUT", "/api/profiles/6", body):
@@ -53,7 +53,7 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"profile_id":"12"}"#.data(using: .utf8), error: nil))
     }
 
-    private func updateProfileReturningGeneralErrorCode(token: String?, response: (Response) -> Void) {
+    private func updateProfileContactIdentifierReturningGeneralErrorCode(token: String?, response: (Response) -> Void) {
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
@@ -61,7 +61,7 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"state":-1}"#.data(using: .utf8), error: nil))
     }
 
-    private func updateProfileReturningNotInfectedState(token: String?, response: (Response) -> Void) {
+    private func updateProfileContactIdentifierReturningNotInfectedState(token: String?, response: (Response) -> Void) {
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return
@@ -69,7 +69,7 @@ public final class TestClient: Client {
         response((statusCode: nil, data: #"{"state":0}"#.data(using: .utf8), error: nil))
     }
 
-    private func updateProfileReturningInfectedState(token: String?, response: (Response) -> Void) {
+    private func updateProfileContactIdentifierReturningInfectedState(token: String?, response: (Response) -> Void) {
         guard isTokenValid(token: token) else {
             response((nil, nil, nil))
             return

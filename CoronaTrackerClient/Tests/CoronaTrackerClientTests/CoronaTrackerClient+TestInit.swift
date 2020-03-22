@@ -1,5 +1,5 @@
 //
-//  CoronaTrackerClient+Init.swift
+//  CoronaTrackerClient+TestInit.swift
 //  CoronaTrackerClientTests
 //
 //  Created by Stephan Lemnitzer on 21.03.20.

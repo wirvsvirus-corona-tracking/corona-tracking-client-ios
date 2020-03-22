@@ -34,6 +34,43 @@ final class Tracker {
         }
     }
 
+    enum ProfileState {
+        case infected
+        case notInfected
+
+        fileprivate init(clientProfileState: Int) {
+            switch clientProfileState {
+            case 1: self = .infected
+            default: self = .notInfected
+            }
+        }
+
+        fileprivate var clientProfileState: Int {
+            switch self {
+            case .notInfected: return 0
+            case .infected: return 1
+            }
+        }
+    }
+
+    enum ChangeProfileStateError: Error {
+        case missingProfileIdentifier
+        case clientError
+    }
+
+    func changeProfileState(to state: ProfileState, completion: @escaping (ProfileState?, Error?) -> Void) {
+        if let profileIdentifier = profileIdentifierProvider.profileIdentifier {
+            client.updateProfile(state: state.clientProfileState, identifier: profileIdentifier) { statusCode in
+                switch statusCode {
+                case 0: completion(state, nil)
+                default: completion(nil, ChangeProfileStateError.clientError)
+                }
+            }
+        } else {
+            completion(nil, ChangeProfileStateError.missingProfileIdentifier)
+        }
+    }
+
     private func startClientToPoll(profileIdentifier: String, completion: @escaping (_ profileIdentifier: String, _ profileState: Int) -> Void) {
         client.getProfile(identifier: profileIdentifier) { profileState in
             if let profileState = profileState {

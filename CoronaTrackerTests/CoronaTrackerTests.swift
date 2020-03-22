@@ -8,8 +8,6 @@
 
 import XCTest
 
-import CoronaTrackerClient
-import CoronaTrackerClientTest
 @testable import CoronaTracker
 
 final class CoronaTrackerTests: XCTestCase {
@@ -32,20 +30,5 @@ final class CoronaTrackerTests: XCTestCase {
             expectation.fulfill()
         }
         waitForExpectations(timeout: 1)
-    }
-}
-
-private extension Tracker {
-
-    convenience init(provider: ProfileIdentifierProvider) {
-        self.init(profileIdentifierProvider: provider, client: TestClient(), tokenProvider: TestTokenProvider())
-    }
-}
-
-private final class TestProfileIdentifierProvider: ProfileIdentifierProvider {
-    let profileIdentifier: String?
-
-    init(profileIdentifier: String?) {
-        self.profileIdentifier = profileIdentifier
     }
 }
