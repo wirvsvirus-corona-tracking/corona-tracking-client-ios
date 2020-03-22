@@ -1,5 +1,5 @@
 //
-//  Tracker.swift
+//  CoronaTracker.swift
 //  CoronaTracker
 //
 //  Created by Stephan Lemnitzer on 21.03.20.
@@ -13,7 +13,7 @@ protocol ProfileIdentifierProvider {
     var profileIdentifier: String? { get }
 }
 
-final class Tracker {
+final class CoronaTracker {
 
     init(profileIdentifierProvider: ProfileIdentifierProvider, client: Client, tokenProvider: TokenProvider) {
         self.profileIdentifierProvider = profileIdentifierProvider

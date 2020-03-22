@@ -26,7 +26,7 @@ final class ViewController: UIViewController {
         }
     }
 
-    private lazy var tracker: Tracker = { .init() }()
+    private lazy var tracker: CoronaTracker = { .init() }()
 
     private func updateViews(forProfileState state: Int) {
         switch state {
@@ -46,7 +46,7 @@ final class ViewController: UIViewController {
     }
 }
 
-private extension Tracker {
+private extension CoronaTracker {
 
     convenience init() {
         self.init(

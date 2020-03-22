@@ -16,7 +16,7 @@
 		C0578F00242640B4001B4344 /* CoronaTrackerClient in Frameworks */ = {isa = PBXBuildFile; productRef = C0578EFF242640B4001B4344 /* CoronaTrackerClient */; };
 		C0578F022426410E001B4344 /* URLClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0578F012426410E001B4344 /* URLClient.swift */; };
 		C0578F0524264228001B4344 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0578EFC24263E46001B4344 /* Config.plist */; };
-		C061DA6924267F8600EF699C /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C061DA6824267F8600EF699C /* Tracker.swift */; };
+		C061DA6924267F8600EF699C /* CoronaTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C061DA6824267F8600EF699C /* CoronaTracker.swift */; };
 		C08262A22427359E00E51618 /* URLClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08262A12427359E00E51618 /* URLClientTests.swift */; };
 		C0DAD1C02425F71F00F52F83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DAD1BF2425F71F00F52F83 /* AppDelegate.swift */; };
 		C0DAD1C22425F71F00F52F83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DAD1C12425F71F00F52F83 /* SceneDelegate.swift */; };
@@ -52,7 +52,7 @@
 		C0458E9F24275E3700E6D023 /* DeleteProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProfileTests.swift; sourceTree = "<group>"; };
 		C0578EFC24263E46001B4344 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		C0578F012426410E001B4344 /* URLClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLClient.swift; sourceTree = "<group>"; };
-		C061DA6824267F8600EF699C /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
+		C061DA6824267F8600EF699C /* CoronaTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronaTracker.swift; sourceTree = "<group>"; };
 		C08262A12427359E00E51618 /* URLClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLClientTests.swift; sourceTree = "<group>"; };
 		C0DAD1BC2425F71F00F52F83 /* CoronaTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoronaTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0DAD1BF2425F71F00F52F83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 				C0DAD1BF2425F71F00F52F83 /* AppDelegate.swift */,
 				C0DAD1C12425F71F00F52F83 /* SceneDelegate.swift */,
 				C0DAD1C32425F71F00F52F83 /* ViewController.swift */,
-				C061DA6824267F8600EF699C /* Tracker.swift */,
+				C061DA6824267F8600EF699C /* CoronaTracker.swift */,
 				C0578F012426410E001B4344 /* URLClient.swift */,
 				C0DAD1C52425F71F00F52F83 /* Main.storyboard */,
 				C0DAD1C82425F72300F52F83 /* Assets.xcassets */,
@@ -309,7 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C061DA6924267F8600EF699C /* Tracker.swift in Sources */,
+				C061DA6924267F8600EF699C /* CoronaTracker.swift in Sources */,
 				C0578F022426410E001B4344 /* URLClient.swift in Sources */,
 				C0DAD1C42425F71F00F52F83 /* ViewController.swift in Sources */,
 				C0DAD1C02425F71F00F52F83 /* AppDelegate.swift in Sources */,

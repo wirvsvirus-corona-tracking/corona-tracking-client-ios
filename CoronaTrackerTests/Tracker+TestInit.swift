@@ -1,5 +1,5 @@
 //
-//  Tracker+TestInit.swift
+//  CoronaTracker+TestInit.swift
 //  CoronaTrackerTests
 //
 //  Created by Stephan Lemnitzer on 22.03.20.
@@ -9,7 +9,7 @@
 @testable import CoronaTracker
 import CoronaTrackerClientTest
 
-extension Tracker {
+extension CoronaTracker {
 
     convenience init(provider: ProfileIdentifierProvider) {
         self.init(profileIdentifierProvider: provider, client: TestClient(), tokenProvider: TestTokenProvider())
