@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C01F87332426871300415A2E /* CoronaTrackerClientTest in Frameworks */ = {isa = PBXBuildFile; productRef = C01F87322426871300415A2E /* CoronaTrackerClientTest */; };
 		C01F87362426976A00415A2E /* CoronaTrackerClientTest in Frameworks */ = {isa = PBXBuildFile; productRef = C01F87352426976A00415A2E /* CoronaTrackerClientTest */; };
 		C0458E9A2427564300E6D023 /* ChangeProfileStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0458E992427564300E6D023 /* ChangeProfileStateTests.swift */; };
 		C0458E9C2427569600E6D023 /* CoronaTracker+TestInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0458E9B2427569600E6D023 /* CoronaTracker+TestInit.swift */; };
@@ -86,7 +85,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C01F87332426871300415A2E /* CoronaTrackerClientTest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,7 +207,6 @@
 			);
 			name = CoronaTrackerTests;
 			packageProductDependencies = (
-				C01F87322426871300415A2E /* CoronaTrackerClientTest */,
 			);
 			productName = CoronaTrackerTests;
 			productReference = C0DAD1D22425F72300F52F83 /* CoronaTrackerTests.xctest */;
@@ -430,6 +427,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -484,6 +482,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -502,7 +501,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "de.wirvsvirus.corona-tracking.ios.CoronaTracker";
 				PRODUCT_NAME = CoronaTracker;
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -519,7 +517,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "de.wirvsvirus.corona-tracking.ios.CoronaTracker";
 				PRODUCT_NAME = CoronaTracker;
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -538,7 +535,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "de.wirvsvirus.corona-tracking.ios.CoronaTrackerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoronaTracker.app/CoronaTracker";
 			};
 			name = Debug;
@@ -558,7 +554,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "de.wirvsvirus.corona-tracking.ios.CoronaTrackerTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoronaTracker.app/CoronaTracker";
 			};
 			name = Release;
@@ -578,7 +573,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.wirvsvirus.corona-tracking.ios.CoronaTrackerUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = CoronaTracker;
 			};
 			name = Debug;
@@ -598,7 +592,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.wirvsvirus.corona-tracking.ios.CoronaTrackerUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = CoronaTracker;
 			};
 			name = Release;
@@ -645,10 +638,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C01F87322426871300415A2E /* CoronaTrackerClientTest */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CoronaTrackerClientTest;
-		};
 		C01F87352426976A00415A2E /* CoronaTrackerClientTest */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoronaTrackerClientTest;
